@@ -54,6 +54,20 @@ web UI -> FastAPI job API -> input validation -> frame selection -> telemetry al
 4. Add QA: coverage heatmap, reprojection error, scale and GPS residual reports.
 5. Benchmark against the target: under 15 minutes for a 10-minute video and <=1 m spatial error.
 
+## Reference demo output
+
+The tracked job `data/jobs/actual-sparse-demo/` is the committed reference result: 44 selected frames, a synthetic (clearly-labelled) flight path, and a COLMAP sparse model with its PLY export. It is versioned on purpose so a fresh clone contains the documented output without re-running anything.
+
+To regenerate it from a video, install COLMAP on `PATH` and run:
+
+```bash
+python work/run_sparse_demo.py /path/to/flight.mp4
+```
+
+The script refuses to overwrite an existing job directory and defaults to the compact laptop profile (max 45 frames, 1280 px). Reconstruction is CPU-based, so results are equivalent but not guaranteed byte-identical across machines or COLMAP versions.
+
+Other job directories under `data/jobs/` are machine-generated and ignored by Git.
+
 ## Input and privacy
 
-Jobs are stored locally in `data/jobs/`; that directory is ignored by Git. Do not upload imagery you are not authorized to process.
+Jobs are stored locally in `data/jobs/`; only the reference demo job is tracked by Git. Do not upload imagery you are not authorized to process.

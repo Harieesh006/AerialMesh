@@ -1,0 +1,21 @@
+{
+  "profile": "compact-demo",
+  "telemetry": "synthetic - not georeferenced or suitable for measurement",
+  "frame_selection": {
+    "source_frames": 951,
+    "selected_frames": 44,
+    "fps": 59.94,
+    "sample_stride": 22,
+    "mean_sharpness": 79.07,
+    "output_dimensions": [
+      1280,
+      720
+    ]
+  },
+  "reconstruction": {
+    "ran": true,
+    "success": true,
+    "sparse_model": "/Users/apple/Documents/Codex/2026-09-22/sta/data/jobs/actual-sparse-demo/reconstruction/sparse/0",
+    "point_cloud": "/Users/apple/Documents/Codex/2026-09-22/sta/data/jobs/actual-sparse-demo/reconstruction/sparse-point-cloud.ply"
+  }
+}

@@ -1,16 +1,42 @@
 """Build a compact, real sparse point cloud from the bundled demo video."""
 from pathlib import Path
+import argparse
 import json
+import sys
+
+root = Path(__file__).resolve().parents[1]
+# Allow running as `python work/run_sparse_demo.py` from any working directory.
+if str(root) not in sys.path:
+    sys.path.insert(0, str(root))
 
 from app.pipeline import run_colmap, select_frames
 from app.telemetry import flight_path_geojson, generate_demo_track
 
-root = Path(__file__).resolve().parents[1]
-job = root / "data" / "jobs" / "actual-sparse-demo"
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument(
+    "video",
+    nargs="?",
+    type=Path,
+    help="Source drone video. Defaults to data/source/demo-flight.mp4 relative to the repo root.",
+)
+parser.add_argument(
+    "--job",
+    type=Path,
+    default=root / "data" / "jobs" / "actual-sparse-demo",
+    help="Destination job directory (refuses to overwrite an existing one).",
+)
+args = parser.parse_args()
+
+video = args.video or (root / "data" / "source" / "demo-flight.mp4")
+if not video.is_file():
+    raise SystemExit(
+        f"Source video not found: {video}\n"
+        "Pass the path explicitly, e.g. python work/run_sparse_demo.py /path/to/flight.mp4"
+    )
+job = args.job
 if job.exists():
     raise SystemExit(f"Refusing to overwrite existing job: {job}")
 job.mkdir(parents=True)
-video = Path("/Users/apple/Downloads/16621394_3840_2160_60fps.mp4")
 
 # The compact profile is for a laptop demo, not the full-resolution production profile.
 frame_data = select_frames(video, job / "frames", max_frames=45, max_dimension=1280)
