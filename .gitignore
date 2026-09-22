@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+*.py[cod]
+data/jobs/
+.DS_Store
+
+# Local generated artifacts
+work/pycache/
+work/colmap-smoke*/
+*.db
+*.db-shm
+*.db-wal
+*.mp4
+*.mov
+*.avi
